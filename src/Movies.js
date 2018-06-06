@@ -7,9 +7,29 @@ import {
 } from 'react-native';
 
 import MoviePoster from './MoviePoster';
+import MoviePopup from './MoviePopup';
 import { movies } from './data';
 
 export default class Movies extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
+  state ={
+    popupIsOpen: false,
+  }
+
+  openMovie = (movie) => {
+    this.setState({
+      popupIsOpen: true,
+      movie
+    })
+  }
+  closeMovie = () => {
+    this.setState({
+      popupIsOpen: false,
+    })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -24,6 +44,11 @@ export default class Movies extends React.Component {
             key={index}
           />)}
         </ScrollView>
+        <MoviePopup
+          movie={this.state.movie}
+          isOpen={this.state.popupIsOpen}
+          onClose={this.closeMovie}
+        />
       </View>
     );
   }
